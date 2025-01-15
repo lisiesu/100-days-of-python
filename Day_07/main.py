@@ -1,68 +1,12 @@
 # HANGMAN GAME => To practice loops
 
 import random
-
-stages = [r'''
-  +---+
-  |   |
-  O   |
- /|\  |
- / \  |
-      |
-=========
-''', r'''
-  +---+
-  |   |
-  O   |
- /|\  |
- /    |
-      |
-=========
-''', r'''
-  +---+
-  |   |
-  O   |
- /|\  |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
- /|   |
-      |
-      |
-=========''', '''
-  +---+
-  |   |
-  O   |
-  |   |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-  O   |
-      |
-      |
-      |
-=========
-''', '''
-  +---+
-  |   |
-      |
-      |
-      |
-      |
-=========
-''']
-word_list = ["aardvark", "baboon", "camel"]
+import hangman_words
+import hangman_art
 
 lives = 6
-
-chosen_word = random.choice(word_list)
+print(hangman_art.logo)
+chosen_word = random.choice(hangman_words.word_list)
 print(chosen_word)
 
 placeholder = ""
@@ -75,6 +19,7 @@ game_over = False
 correct_letters = []
 
 while not game_over:
+    print(f"****************************{lives}/6 LIVES LEFT****************************")
     guess = input("Guess a letter: ").lower()
 
     display = ""
@@ -82,6 +27,8 @@ while not game_over:
     for letter in chosen_word:
         if letter == guess:
             display += letter
+            if guess in correct_letters:
+                print(f"You have already guessed {guess}")
             correct_letters.append(guess)
         elif letter in correct_letters:
             display += letter
@@ -91,6 +38,7 @@ while not game_over:
     print(display)
 
     if guess not in chosen_word:
+        print(f"You chose {guess}. Unfortunately that is WRONG. You lose a life!")
         lives -= 1
         if lives == 0:
             game_over = True
@@ -100,4 +48,4 @@ while not game_over:
         game_over = True
         print("You win.")
 
-    print(stages[lives])
+    print(hangman_art.stages[lives])
